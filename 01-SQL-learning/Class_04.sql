@@ -1,1 +1,0 @@
--- 23/sun/aug/2026 ko kuchh nhi padhaya tha sql ka. Github padha tha
