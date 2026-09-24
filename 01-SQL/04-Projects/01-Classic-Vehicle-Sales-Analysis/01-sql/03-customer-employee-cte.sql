@@ -60,9 +60,7 @@ ORDER BY total_revenue DESC;
 -- Single highest spending customer per sales representative using Window Functions and CTEs
 WITH CustomerRanking AS (
     SELECT
-        DENSE_RANK() OVER(
-            PARTITION BY e.employeeNumber
-            ORDER BY SUM(p.amount) DESC
+        DENSE_RANK() OVER(PARTITION BY e.employeeNumber ORDER BY SUM(p.amount) DESC
         ) AS rank,
         e.employeeNumber,
         c.customerNumber,
