@@ -63,7 +63,7 @@ The database (`food_delivery_db`) consists of **12 core relational tables**:
 │   ├── 05-customer-analysis.sql
 │   └── 06-delivery-and-fulfillment-analysis.sql
 └── README.md
-
+```
 
 ## 7. Analysis Coverage & Module Summary
 
@@ -106,7 +106,7 @@ GO
 
 -- Example: Execute Analysis File
 -- Run scripts inside analysis/01 through analysis/06
-
+```
 ## 10. Technical Skills Demonstrated
 - **DDL & DML Control**: Schema design, data type selection, relational constraints, primary/foreign key cascading.
 - **Advanced Querying**: Window Functions (`DENSE_RANK`, `SUM() OVER()`), Common Table Expressions (CTEs), Subqueries.
