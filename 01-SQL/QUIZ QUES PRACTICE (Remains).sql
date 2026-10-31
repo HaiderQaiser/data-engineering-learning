@@ -173,3 +173,35 @@ INNER JOIN sales.order_items oi
     ON ro.order_id = oi.order_id
 GROUP BY YEAR(ro.order_date)
 ORDER BY order_year;
+/*
+Company ki Finance team Year-to-Date (YTD) Cumulative Revenue track karna chahti hai. Unhe 
+dekhna hai ke har saal ke har mahine tak poori company ne total kitni kamai kar li hai, aur
+pichle mahine ke muqable mein is mahine Monthly Revenue mein kitna faraq (Growth/Drop) aya.*/
+WITH MonthYearwiseRev AS(
+SELECT 
+    --YEAR(o.order_date) AS year,
+    --MONTH(o.order_date) AS month,
+    --o.order_date,
+    SUM(oi.quantity * oi.list_price * (1 - oi.discount)) OVER(
+        PARTITION BY YEAR(o.order_date) 
+        ORDER BY YEAR(o.order_date)
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS year_wise_revenue,
+    SUM(oi.quantity * oi.list_price * (1 - oi.discount)) OVER(
+        PARTITION BY YEAR(o.order_date), MONTH(o.order_date) 
+        ORDER BY YEAR(o.order_date), MONTH(o.order_date)
+        ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS month_wise_revenue
+FROM sales.orders o
+INNER JOIN sales.order_items oi
+    ON o.order_id = oi.order_id
+-- GROUP BY  YEAR(o.order_date), MONTH(o.order_date)
+)
+SELECT
+    year_wise_revenue,
+    LAG(year_wise_revenue, 1, 0) OVER(
+        ORDER BY year_wise_revenue 
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS prev_year_revenue,
+    month_wise_revenue,
+    LAG(month_wise_revenue, 1, 0) OVER(
+        ORDER BY month_wise_revenue 
+        ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS prev_month_revenue
+FROM MonthYearwiseRev;

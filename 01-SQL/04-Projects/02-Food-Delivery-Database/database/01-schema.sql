@@ -4,6 +4,15 @@
 -- Description: Core table definitions and primary keys
 -- =============================================
 
+/*-- 1. Create the Database
+CREATE DATABASE food_delivery_db;
+GO
+
+-- 2. Switch to the newly created Database
+USE food_delivery_db;
+GO
+*/
+
 -- 1. Customers Table
 CREATE TABLE customers (
     customer_id INT IDENTITY(1,1) PRIMARY KEY,

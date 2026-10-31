@@ -69,3 +69,4 @@ FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
 ALTER TABLE reviews
 ADD CONSTRAINT FK_reviews_orders_order_id
 FOREIGN KEY (order_id) REFERENCES orders(order_id);
+
